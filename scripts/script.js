@@ -103,8 +103,11 @@ const userGuessing = () => {
     alert(
       `You are correct! Your current score is ${score} out of ${tries} total`
     );
+  } else {
+    alert(
+      `You are wrong! Your current score is ${score} out of ${tries} total`
+    );
   }
-  return userInput;
 };
 
 let startButton = document.querySelector(".start-button");
