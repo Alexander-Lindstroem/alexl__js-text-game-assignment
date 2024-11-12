@@ -142,6 +142,9 @@ const scoreAssessment = (scoreInput) => {
   alert(
     `You have scored ${scoreInput} out of a total of ${tries} questions, earning you a total percentage of approximately ${percentage}%`
   );
+  if (percentage === 100) {
+    alert("You are a certified Hiragana Master!");
+  }
 };
 
 let tries = 0;
