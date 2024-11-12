@@ -53,15 +53,6 @@ const randomNumberGenerator = (numerator) => {
   return Math.floor(Math.random() * numerator);
 };
 
-let currentWord;
-let pastWords = [];
-const wordSelector = () => {
-  let randomNumber = randomNumberGenerator(words.length);
-  currentWord = words[randomNumber];
-  words.splice(randomNumber, 1);
-  pastWords.push(currentWord);
-};
-
 const selectAmountOfTries = () => {
   let defined = false;
   let userInput;
@@ -84,8 +75,17 @@ const selectAmountOfTries = () => {
   return userInput;
 };
 
+let currentWord;
+let pastWords = [];
+const wordSelector = () => {
+  let randomNumber = randomNumberGenerator(words.length);
+  currentWord = words[randomNumber];
+  words.splice(randomNumber, 1);
+  pastWords.push(currentWord);
+};
+
 const userGuessing = () => {
-  let defined;
+  let defined = false;
   let userInput;
   let pattern = /^[a-z]$/i;
   while (!defined) {
@@ -93,7 +93,16 @@ const userGuessing = () => {
       `Write how ${currentWord[0]} is read with latin characters`
     );
     if (pattern.test(userInput) === false) {
+      alert("Please type a word with latin letters.");
+    } else {
+      defined = true;
     }
+  }
+  if (userInput.toLowerCase() === currentWord[1]) {
+    score++;
+    alert(
+      `You are correct! Your current score is ${score} out of ${tries} total`
+    );
   }
   return userInput;
 };
@@ -101,6 +110,7 @@ const userGuessing = () => {
 let startButton = document.querySelector(".start-button");
 startButton.onclick = () => {
   let playAgain = true;
+  let score = 0;
   while (playAgain === true) {
     let tries = selectAmountOfTries();
     for (i = 0; i < tries; i++) {
