@@ -88,6 +88,7 @@ const userGuessing = () => {
   let defined = false;
   let userInput;
   let pattern = /^[a-z]+$/i;
+  wordSelector();
   while (!defined) {
     userInput = prompt(
       `Write how ${currentWord[0]} is read with latin characters`
@@ -110,17 +111,48 @@ const userGuessing = () => {
   }
 };
 
+const askToPlayAgain = () => {
+  let defined = false; //I guess you don't need this since return exits the function anyway? -AL
+  let userInput;
+  while (!defined) {
+    userInput = prompt("Would you like to play again? Type 'yes' or 'no'.");
+    if (userInput.toLowerCase === "yes") {
+      alert("Back to the start we go!");
+      return true;
+    } else if (userInput.toLowerCase === "no") {
+      alert("Thank you for playing!");
+      return false;
+    } else {
+      alert("You have to type either 'yes' or 'no'!");
+    }
+  }
+};
+
+const scoreAssessment = (scoreInput) => {
+  let percentage = Math.floor((scoreInput / tries) * 100);
+  alert(
+    `You have scored ${scoreInput} out of a total of ${tries} questions, earning you a total percentage of approximately ${percentage}%`
+  );
+};
+
 let startButton = document.querySelector(".start-button");
 startButton.onclick = () => {
   let playAgain = true;
-  let score = 0;
   while (playAgain === true) {
+    let score = 0;
     let tries = selectAmountOfTries();
     for (i = 0; i < tries; i++) {
-      wordSelector();
+      userGuessing();
     }
+
+    playAgain = askToPlayAgain();
   }
+
   console.log(words);
   console.log(currentWord);
   console.log(pastWords);
 };
+
+let score = 3;
+let tries = selectAmountOfTries();
+scoreAssessment(score);
