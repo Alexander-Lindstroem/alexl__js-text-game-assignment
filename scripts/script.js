@@ -87,15 +87,15 @@ const wordSelector = () => {
 const userGuessing = () => {
   let defined = false;
   let userInput;
-  let pattern = /^[a-z]$/i;
+  let pattern = /^[a-z]+$/i;
   while (!defined) {
     userInput = prompt(
       `Write how ${currentWord[0]} is read with latin characters`
     );
-    if (pattern.test(userInput) === false) {
-      alert("Please type a word with latin letters.");
-    } else {
+    if (pattern.test(userInput) === true) {
       defined = true;
+    } else {
+      alert("Please type a word with latin letters.");
     }
   }
   if (userInput.toLowerCase() === currentWord[1]) {
