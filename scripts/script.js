@@ -111,6 +111,16 @@ const userGuessing = () => {
   }
 };
 
+const resetWordArray = () => {
+  if (pastWords.length === 0) {
+    return;
+  }
+  pastWords.forEach((item) => {
+    words.push(item);
+  });
+  pastWords = [];
+};
+
 const askToPlayAgain = () => {
   let userInput;
   while (true) {
@@ -140,6 +150,7 @@ let startButton = document.querySelector(".start-button");
 startButton.onclick = () => {
   let playAgain = true;
   while (playAgain === true) {
+    resetWordArray();
     score = 0;
     tries = selectAmountOfTries();
     for (i = 0; i < tries; i++) {
