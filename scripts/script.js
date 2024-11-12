@@ -112,14 +112,13 @@ const userGuessing = () => {
 };
 
 const askToPlayAgain = () => {
-  let defined = false; //I guess you don't need this since return exits the function anyway? -AL
   let userInput;
-  while (!defined) {
+  while (true) {
     userInput = prompt("Would you like to play again? Type 'yes' or 'no'.");
-    if (userInput.toLowerCase === "yes") {
+    if (userInput.toLowerCase() === "yes") {
       alert("Back to the start we go!");
       return true;
-    } else if (userInput.toLowerCase === "no") {
+    } else if (userInput.toLowerCase() === "no") {
       alert("Thank you for playing!");
       return false;
     } else {
@@ -135,24 +134,18 @@ const scoreAssessment = (scoreInput) => {
   );
 };
 
+let tries = 0;
+let score = 0;
 let startButton = document.querySelector(".start-button");
 startButton.onclick = () => {
   let playAgain = true;
   while (playAgain === true) {
-    let score = 0;
-    let tries = selectAmountOfTries();
+    score = 0;
+    tries = selectAmountOfTries();
     for (i = 0; i < tries; i++) {
       userGuessing();
     }
-
+    scoreAssessment(score);
     playAgain = askToPlayAgain();
   }
-
-  console.log(words);
-  console.log(currentWord);
-  console.log(pastWords);
 };
-
-let score = 3;
-let tries = selectAmountOfTries();
-scoreAssessment(score);
