@@ -87,7 +87,7 @@ const wordSelector = () => {
 const userGuessing = () => {
   let defined = false;
   let userInput;
-  let pattern = /^[a-z]+$/i;
+  const pattern = /^[a-z]+$/i;
   wordSelector();
   while (!defined) {
     userInput = prompt(
