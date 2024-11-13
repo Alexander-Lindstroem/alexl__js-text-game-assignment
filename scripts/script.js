@@ -57,12 +57,13 @@ const selectAmountOfTries = () => {
   let defined = false;
   let userInput;
   while (!defined) {
-    userInput = parseInt(
-      prompt(
-        `How many words do you want to guess? There is a maximum of ${words.length} words, so you cannot exceed that number.`
-      )
+    userInput = prompt(
+      `How many words do you want to guess? There is a maximum of ${words.length} words, so you cannot exceed that number.`
     );
-    if (isNaN(userInput) === true) {
+    if (userInput === null) {
+      cancelled = true;
+      return;
+    } else if (isNaN(parseInt(userInput)) === true) {
       alert("You have to pick a number");
     } else if (userInput > words.length) {
       alert(`You cannot exceed ${words.length}!`);
@@ -93,7 +94,10 @@ const userGuessing = () => {
     userInput = prompt(
       `Write how ${currentWord[0]} is read with latin characters`
     );
-    if (pattern.test(userInput) === true) {
+    if (userInput === null) {
+      cancelled = true;
+      return;
+    } else if (pattern.test(userInput) === true) {
       defined = true;
     } else {
       alert("Please type a word with latin letters.");
@@ -125,12 +129,11 @@ const askToPlayAgain = () => {
   let userInput;
   while (true) {
     userInput = prompt("Would you like to play again? Type 'yes' or 'no'.");
-    if (userInput.toLowerCase() === "yes") {
+    if (userInput === null || userInput.toLowerCase() === "no") {
+      return false;
+    } else if (userInput.toLowerCase() === "yes") {
       alert("Back to the start we go!");
       return true;
-    } else if (userInput.toLowerCase() === "no") {
-      alert("Thank you for playing!");
-      return false;
     } else {
       alert("You have to type either 'yes' or 'no'!");
     }
@@ -147,19 +150,28 @@ const scoreAssessment = (scoreInput) => {
   }
 };
 
+let cancelled;
 let tries = 0;
 let score = 0;
 let startButton = document.querySelector(".start-button");
 startButton.onclick = () => {
   let playAgain = true;
-  while (playAgain === true) {
+  cancelled = false;
+  while (playAgain === true && cancelled === false) {
     resetWordArray();
     score = 0;
     tries = selectAmountOfTries();
-    for (i = 0; i < tries; i++) {
-      userGuessing();
+    for (let i = 0; i < tries; i++) {
+      if (cancelled === true) {
+        break;
+      } else {
+        userGuessing();
+      }
     }
-    scoreAssessment(score);
-    playAgain = askToPlayAgain();
+    if (!cancelled) {
+      scoreAssessment(score);
+      playAgain = askToPlayAgain();
+    }
   }
+  alert("Thank you for playing!");
 };
